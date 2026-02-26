@@ -1,0 +1,23 @@
+# 测试二进制文件
+*_test
+*.test
+*.out
+*.exe
+
+# 编译输出
+*.o
+*.so
+*.a
+*.dylib
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 可执行文件
+a.out
