@@ -72,8 +72,90 @@ using std::vector;
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        
+        int slow = 0, fast = 0;
+        do {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while ((slow != fast) );
+        fast = 0;
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
     }
 };
 // @lc code=end
+
+#include <iostream>
+#include <cassert>
+
+void test1() {
+    // 示例 1
+    Solution sol;
+    vector<int> nums = {1, 3, 4, 2, 2};
+    assert(sol.findDuplicate(nums) == 2);
+    std::cout << "Test 1 passed: duplicate=2" << std::endl;
+}
+
+void test2() {
+    // 示例 2
+    Solution sol;
+    vector<int> nums = {3, 1, 3, 4, 2};
+    assert(sol.findDuplicate(nums) == 3);
+    std::cout << "Test 2 passed: duplicate=3" << std::endl;
+}
+
+void test3() {
+    // 示例 3 - 全部相同
+    Solution sol;
+    vector<int> nums = {3, 3, 3, 3, 3};
+    assert(sol.findDuplicate(nums) == 3);
+    std::cout << "Test 3 passed: duplicate=3 (all same)" << std::endl;
+}
+
+void test4() {
+    // 最小情况 n=1
+    Solution sol;
+    vector<int> nums = {1, 1};
+    assert(sol.findDuplicate(nums) == 1);
+    std::cout << "Test 4 passed: duplicate=1 (min case)" << std::endl;
+}
+
+void test5() {
+    // 重复多次
+    Solution sol;
+    vector<int> nums = {1, 2, 3, 4, 5, 6, 3, 7};
+    assert(sol.findDuplicate(nums) == 3);
+    std::cout << "Test 5 passed: duplicate=3 (larger array)" << std::endl;
+}
+
+void test6() {
+    // 重复数字在开头
+    Solution sol;
+    vector<int> nums = {2, 2, 1, 3};
+    assert(sol.findDuplicate(nums) == 2);
+    std::cout << "Test 6 passed: duplicate=2 (at beginning)" << std::endl;
+}
+
+void test7() {
+    // 重复数字在末尾
+    Solution sol;
+    vector<int> nums = {1, 2, 4, 3, 4};
+    assert(sol.findDuplicate(nums) == 4);
+    std::cout << "Test 7 passed: duplicate=4 (at end)" << std::endl;
+}
+
+int main() {
+    test1();
+    test2();
+    test3();
+    test4();
+    test5();
+    test6();
+    test7();
+
+    std::cout << "\n=== All tests passed! ===" << std::endl;
+    return 0;
+}
 
