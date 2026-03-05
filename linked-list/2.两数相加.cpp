@@ -54,26 +54,8 @@
  * 
  * 
  */
-#include <stdio.h>
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
-void printList(ListNode* head);
+#include "listnode.h"
 // @lc code=start
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode() : val(0), next(nullptr) {}
- *     ListNode(int x) : val(x), next(nullptr) {}
- *     ListNode(int x, ListNode *next) : val(x), next(next) {}
- * };
- */
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
@@ -115,55 +97,6 @@ public:
 
 #include <iostream>
 #include <cassert>
-
-// 辅助函数：创建链表
-ListNode* createList(const std::vector<int>& vals) {
-    if (vals.empty()) return nullptr;
-    ListNode* head = new ListNode(vals[0]);
-    ListNode* cur = head;
-    for (size_t i = 1; i < vals.size(); ++i) {
-        cur->next = new ListNode(vals[i]);
-        cur = cur->next;
-    }
-    return head;
-}
-// 辅助函数：打印链表
-void printList(ListNode* head) {
-    std::cout << "[";
-    while (head) {
-        std::cout << head->val;
-        if (head->next) std::cout << ",";
-        head = head->next;
-    }
-    std::cout << "]";
-}
-
-
-// 辅助函数：释放链表
-void deleteList(ListNode* head) {
-    while (head) {
-        ListNode* next = head->next;
-        delete head;
-        head = next;
-    }
-}
-
-// 辅助函数：比较两个链表是否相等
-bool listsEqual(ListNode* a, ListNode* b) {
-    printf("a:");
-    printList(a);
-    printf("\n");
-    printf("b:");
-    printList(b);
-    printf("\n");
-    while (a && b) {
-        if (a->val != b->val) return false;
-        a = a->next;
-        b = b->next;
-    }
-    return a == nullptr && b == nullptr;
-}
-
 
 void test1() {
     // 示例 1
