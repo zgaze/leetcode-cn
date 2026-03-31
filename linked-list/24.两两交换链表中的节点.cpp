@@ -7,11 +7,7 @@
  *
  * algorithms
  * Medium (74.98%)
-<<<<<<< HEAD
- * Likes:    2580
-=======
  * Likes:    2584
->>>>>>> 2a823b5 (add)
  * Dislikes: 0
  * Total Accepted:    1.4M
  * Total Submissions: 1.8M
@@ -53,10 +49,6 @@
  * 
  */
 #include "listnode.h"
-<<<<<<< HEAD
-
-=======
->>>>>>> 2a823b5 (add)
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -71,131 +63,175 @@
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
-<<<<<<< HEAD
-        if (head == nullptr) return head;
-        ListNode dummy(0, head);                                                                             
-        ListNode* prev = &dummy;
-        while (prev->next && prev->next->next) {
-            ListNode* n = prev->next;
-            ListNode* nn = prev->next->next;
-            prev->next = nn;
-            n->next = nn->next;
-            nn->next = n;
-            prev = n;
+        if (head == nullptr || head->next == nullptr) return head;
+        ListNode dummy(0);
+        dummy.next = head;
+        ListNode* curr = &dummy;
+        while(curr->next && curr->next->next) {
+            ListNode* next = curr->next;
+            ListNode* nnext = curr->next->next;
+            next->next = nnext->next;
+            nnext->next = next;
+            curr->next = nnext;
+            curr = next;
         }
         return dummy.next;
-=======
-        
->>>>>>> 2a823b5 (add)
     }
 };
 // @lc code=end
 
-<<<<<<< HEAD
-#include <iostream>
+ListNode* swapPairs2(ListNode* head) {
+    if (!head || !head->next) return head;
+    ListNode* newHead = head->next;
+    head->next = swapPairs2(newHead->next);
+    newHead->next = head;
+    return newHead;
+}
+
+// =============== 单元测试 ===============
+
 #include <cassert>
+#include <iostream>
 
-void test1() {
-    // 示例 1
-    Solution sol;
+// 辅助函数：链表转vector（用于验证结果）
+std::vector<int> listToVector(ListNode* head) {
+    std::vector<int> result;
+    while (head) {
+        result.push_back(head->val);
+        head = head->next;
+    }
+    return result;
+}
+
+void testExample1() {
+    std::cout << "测试用例1: 示例1 [1,2,3,4]" << std::endl;
     ListNode* head = createList({1, 2, 3, 4});
+
+    Solution sol;
     ListNode* result = sol.swapPairs(head);
-    ListNode* expected = createList({2, 1, 4, 3});
-    assert(listsEqual(result, expected));
-    std::cout << "Test 1 passed: [1,2,3,4] -> [2,1,4,3]" << std::endl;
-    deleteList(result); deleteList(expected);
+
+    std::vector<int> expected = {2, 1, 4, 3};
+    std::vector<int> actual = listToVector(result);
+    assert(actual == expected && "结果应为[2,1,4,3]");
+
+    deleteList(result);
+    std::cout << "通过" << std::endl;
 }
 
-void test2() {
-    // 示例 2 - 空链表
+void testExample2() {
+    std::cout << "测试用例2: 示例2 空链表" << std::endl;
+    ListNode* head = nullptr;
+
     Solution sol;
-    ListNode* head = createList({});
     ListNode* result = sol.swapPairs(head);
-    ListNode* expected = createList({});
-    assert(listsEqual(result, expected));
-    std::cout << "Test 2 passed: [] -> []" << std::endl;
-    deleteList(result); deleteList(expected);
+
+    assert(result == nullptr && "空链表应返回nullptr");
+    std::cout << "通过" << std::endl;
 }
 
-void test3() {
-    // 示例 3 - 单元素
-    Solution sol;
+void testExample3() {
+    std::cout << "测试用例3: 示例3 单节点 [1]" << std::endl;
     ListNode* head = createList({1});
+
+    Solution sol;
     ListNode* result = sol.swapPairs(head);
-    ListNode* expected = createList({1});
-    assert(listsEqual(result, expected));
-    std::cout << "Test 3 passed: [1] -> [1]" << std::endl;
-    deleteList(result); deleteList(expected);
+
+    std::vector<int> expected = {1};
+    std::vector<int> actual = listToVector(result);
+    assert(actual == expected && "结果应为[1]");
+
+    deleteList(result);
+    std::cout << "通过" << std::endl;
 }
 
-void test4() {
-    // 两个元素
-    Solution sol;
+void testTwoNodes() {
+    std::cout << "测试用例4: 两个节点 [1,2]" << std::endl;
     ListNode* head = createList({1, 2});
+
+    Solution sol;
     ListNode* result = sol.swapPairs(head);
-    ListNode* expected = createList({2, 1});
-    assert(listsEqual(result, expected));
-    std::cout << "Test 4 passed: [1,2] -> [2,1]" << std::endl;
-    deleteList(result); deleteList(expected);
+
+    std::vector<int> expected = {2, 1};
+    std::vector<int> actual = listToVector(result);
+    assert(actual == expected && "结果应为[2,1]");
+
+    deleteList(result);
+    std::cout << "通过" << std::endl;
 }
 
-void test5() {
-    // 三个元素 - 奇数长度
-    Solution sol;
+void testThreeNodes() {
+    std::cout << "测试用例5: 三个节点 [1,2,3]" << std::endl;
     ListNode* head = createList({1, 2, 3});
+
+    Solution sol;
     ListNode* result = sol.swapPairs(head);
-    ListNode* expected = createList({2, 1, 3});
-    assert(listsEqual(result, expected));
-    std::cout << "Test 5 passed: [1,2,3] -> [2,1,3]" << std::endl;
-    deleteList(result); deleteList(expected);
+
+    std::vector<int> expected = {2, 1, 3};
+    std::vector<int> actual = listToVector(result);
+    assert(actual == expected && "结果应为[2,1,3]，最后一个节点不交换");
+
+    deleteList(result);
+    std::cout << "通过" << std::endl;
 }
 
-void test6() {
-    // 五个元素 - 奇数长度
-    Solution sol;
+void testFiveNodes() {
+    std::cout << "测试用例6: 五个节点 [1,2,3,4,5]" << std::endl;
     ListNode* head = createList({1, 2, 3, 4, 5});
+
+    Solution sol;
     ListNode* result = sol.swapPairs(head);
-    ListNode* expected = createList({2, 1, 4, 3, 5});
-    assert(listsEqual(result, expected));
-    std::cout << "Test 6 passed: [1,2,3,4,5] -> [2,1,4,3,5]" << std::endl;
-    deleteList(result); deleteList(expected);
+
+    std::vector<int> expected = {2, 1, 4, 3, 5};
+    std::vector<int> actual = listToVector(result);
+    assert(actual == expected && "结果应为[2,1,4,3,5]");
+
+    deleteList(result);
+    std::cout << "通过" << std::endl;
 }
 
-void test7() {
-    // 六个元素 - 偶数长度
+void testDuplicates() {
+    std::cout << "测试用例7: 重复元素 [1,1,2,2]" << std::endl;
+    ListNode* head = createList({1, 1, 2, 2});
+
     Solution sol;
-    ListNode* head = createList({1, 2, 3, 4, 5, 6});
     ListNode* result = sol.swapPairs(head);
-    ListNode* expected = createList({2, 1, 4, 3, 6, 5});
-    assert(listsEqual(result, expected));
-    std::cout << "Test 7 passed: [1,2,3,4,5,6] -> [2,1,4,3,6,5]" << std::endl;
-    deleteList(result); deleteList(expected);
+
+    std::vector<int> expected = {1, 1, 2, 2};
+    std::vector<int> actual = listToVector(result);
+    assert(actual == expected && "结果应为[1,1,2,2]");
+
+    deleteList(result);
+    std::cout << "通过" << std::endl;
 }
 
-void test8() {
-    // 相同元素
+void testBoundaryValues() {
+    std::cout << "测试用例8: 边界值 [0,100,50,99]" << std::endl;
+    ListNode* head = createList({0, 100, 50, 99});
+
     Solution sol;
-    ListNode* head = createList({1, 1, 1, 1});
     ListNode* result = sol.swapPairs(head);
-    ListNode* expected = createList({1, 1, 1, 1});
-    assert(listsEqual(result, expected));
-    std::cout << "Test 8 passed: [1,1,1,1] -> [1,1,1,1]" << std::endl;
-    deleteList(result); deleteList(expected);
+
+    std::vector<int> expected = {100, 0, 99, 50};
+    std::vector<int> actual = listToVector(result);
+    assert(actual == expected && "结果应为[100,0,99,50]");
+
+    deleteList(result);
+    std::cout << "通过" << std::endl;
 }
 
 int main() {
-    test1();
-    test2();
-    test3();
-    test4();
-    test5();
-    test6();
-    test7();
-    test8();
+    std::cout << "========== 开始测试 24.两两交换链表中的节点 ==========" << std::endl;
 
-    std::cout << "\n=== All tests passed! ===" << std::endl;
+    testExample1();
+    testExample2();
+    testExample3();
+    testTwoNodes();
+    testThreeNodes();
+    testFiveNodes();
+    testDuplicates();
+    testBoundaryValues();
+
+    std::cout << "========== 所有测试用例通过 ==========" << std::endl;
     return 0;
 }
 
-=======
->>>>>>> 2a823b5 (add)

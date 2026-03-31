@@ -57,116 +57,115 @@ class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
         int N = nums.size();
-        for (int i = 0; i < nums.size(); ++i) {
+        for (int i = 0; i < N; ++i) {
             // 让数字 x（如果 1 <= x <= n）回到它应该在的位置——索引 x-1
             while (nums[i] <= N && nums[i] > 0 && nums[i] != nums[nums[i]-1]) {
                 std::swap(nums[i], nums[nums[i]-1]);
-                
             }
         }
         int i = 0;
         for (; i < N; ++i) {
-            if (nums[i] != i +1) return i +1;
+            if (nums[i] != i + 1) return i + 1;
         }
         return i + 1;
-     }
+    }
 };
 // @lc code=end
 
 #include <iostream>
 #include <cassert>
 
-void test1() {
+void testExample1() {
     // 示例 1
     Solution sol;
     vector<int> nums = {1, 2, 0};
     assert(sol.firstMissingPositive(nums) == 3);
-    std::cout << "Test 1 passed: [1,2,0] -> 3" << std::endl;
+    std::cout << "Test Example1 passed: [1,2,0] -> 3" << std::endl;
 }
 
-void test2() {
+void testExample2() {
     // 示例 2
     Solution sol;
     vector<int> nums = {3, 4, -1, 1};
     assert(sol.firstMissingPositive(nums) == 2);
-    std::cout << "Test 2 passed: [3,4,-1,1] -> 2" << std::endl;
+    std::cout << "Test Example2 passed: [3,4,-1,1] -> 2" << std::endl;
 }
 
-void test3() {
+void testExample3() {
     // 示例 3
     Solution sol;
     vector<int> nums = {7, 8, 9, 11, 12};
     assert(sol.firstMissingPositive(nums) == 1);
-    std::cout << "Test 3 passed: [7,8,9,11,12] -> 1" << std::endl;
+    std::cout << "Test Example3 passed: [7,8,9,11,12] -> 1" << std::endl;
 }
 
-void test4() {
+void testSingleElementWithOne() {
     // 单元素数组，包含 1
     Solution sol;
     vector<int> nums = {1};
     assert(sol.firstMissingPositive(nums) == 2);
-    std::cout << "Test 4 passed: [1] -> 2" << std::endl;
+    std::cout << "Test SingleElementWithOne passed: [1] -> 2" << std::endl;
 }
 
-void test5() {
+void testSingleElementWithoutOne() {
     // 单元素数组，不包含 1
     Solution sol;
     vector<int> nums = {2};
     assert(sol.firstMissingPositive(nums) == 1);
-    std::cout << "Test 5 passed: [2] -> 1" << std::endl;
+    std::cout << "Test SingleElementWithoutOne passed: [2] -> 1" << std::endl;
 }
 
-void test6() {
+void testConsecutivePositive() {
     // 连续正整数
     Solution sol;
     vector<int> nums = {1, 2, 3, 4, 5};
     assert(sol.firstMissingPositive(nums) == 6);
-    std::cout << "Test 6 passed: [1,2,3,4,5] -> 6" << std::endl;
+    std::cout << "Test ConsecutivePositive passed: [1,2,3,4,5] -> 6" << std::endl;
 }
 
-void test7() {
+void testDuplicates() {
     // 包含重复元素
     Solution sol;
     vector<int> nums = {1, 1, 2, 2, 3, 3};
     assert(sol.firstMissingPositive(nums) == 4);
-    std::cout << "Test 7 passed: [1,1,2,2,3,3] -> 4" << std::endl;
+    std::cout << "Test Duplicates passed: [1,1,2,2,3,3] -> 4" << std::endl;
 }
 
-void test8() {
+void testAllNegatives() {
     // 全部是负数
     Solution sol;
     vector<int> nums = {-1, -2, -3};
     assert(sol.firstMissingPositive(nums) == 1);
-    std::cout << "Test 8 passed: [-1,-2,-3] -> 1" << std::endl;
+    std::cout << "Test AllNegatives passed: [-1,-2,-3] -> 1" << std::endl;
 }
 
-void test9() {
+void testZeroAndNegative() {
     // 包含 0 和负数
     Solution sol;
     vector<int> nums = {0, -1, 2};
     assert(sol.firstMissingPositive(nums) == 1);
-    std::cout << "Test 9 passed: [0,-1,2] -> 1" << std::endl;
+    std::cout << "Test ZeroAndNegative passed: [0,-1,2] -> 1" << std::endl;
 }
 
-void test10() {
+void testMissingMiddle() {
     // 缺失中间的数字
     Solution sol;
     vector<int> nums = {1, 2, 3, 5, 6};
     assert(sol.firstMissingPositive(nums) == 4);
-    std::cout << "Test 10 passed: [1,2,3,5,6] -> 4" << std::endl;
+    std::cout << "Test MissingMiddle passed: [1,2,3,5,6] -> 4" << std::endl;
 }
 
 int main() {
-    test1();
-    test2();
-    test3();
-    test4();
-    test5();
-    test6();
-    test7();
-    test8();
-    test9();
-    test10();
+    testExample1();
+    testExample2();
+    testExample3();
+    testSingleElementWithOne();
+    testSingleElementWithoutOne();
+    testConsecutivePositive();
+    testDuplicates();
+    testAllNegatives();
+    testZeroAndNegative();
+    testMissingMiddle();
 
     std::cout << "\n=== All tests passed! ===" << std::endl;
     return 0;
