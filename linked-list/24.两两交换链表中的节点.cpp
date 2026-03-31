@@ -7,7 +7,11 @@
  *
  * algorithms
  * Medium (74.98%)
+<<<<<<< HEAD
  * Likes:    2580
+=======
+ * Likes:    2584
+>>>>>>> 2a823b5 (add)
  * Dislikes: 0
  * Total Accepted:    1.4M
  * Total Submissions: 1.8M
@@ -49,7 +53,10 @@
  * 
  */
 #include "listnode.h"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2a823b5 (add)
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -64,6 +71,7 @@
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
+<<<<<<< HEAD
         if (head == nullptr) return head;
         ListNode dummy(0, head);                                                                             
         ListNode* prev = &dummy;
@@ -76,10 +84,14 @@ public:
             prev = n;
         }
         return dummy.next;
+=======
+        
+>>>>>>> 2a823b5 (add)
     }
 };
 // @lc code=end
 
+<<<<<<< HEAD
 #include <iostream>
 #include <cassert>
 
@@ -185,3 +197,5 @@ int main() {
     return 0;
 }
 
+=======
+>>>>>>> 2a823b5 (add)
